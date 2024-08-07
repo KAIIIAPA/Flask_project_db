@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+    <title>My Blog</title>
+</head>
+<body>
+    <header>
+        {% block pagename %}
+        <h1>Мир новостей</h1>
+        {% endblock %}
+    </header>
+
+    <div class="container">
+
+        {% block left_page %}
+        <div class='left_menu'>
+            <blockquote><a href="">Главная страница</a></blockquote>
+            <blockquote><a href="/news/">Новости</a> </blockquote>
+            <blockquote><a href="/registration/">Регистрация</a> </blockquote>
+            {% if current_user.is_authenticated %}
+                {% if current_user.role == "Admin" %}
+                    <blockquote><a href="/admin/">Админ панель</a></blockquote>
+                {% else %}
+                {% endif %}
+            {% else %}
+            {% endif %}
+        </div>
+        {% endblock %}
+
+        {% block centre_page %}
+        <div class="centre_menu">
+        </div>
+        {% endblock %}
+
+        {% block right_page %}
+        <div class="right_menu">
+            {% if current_user.is_authenticated %}
+            <a>Hello, {{ current_user.username }}!</a>
+            <div class="button_block">
+                <blockquote><a href="/logout/"><button>Выйти</button></a></blockquote>
+            </div>
+            {% else %}
+                <div class="button_block">
+                <a>Hello, AnonymousUser!</a>
+                <div class="button_block">
+                    <blockquote><a href="/login/"><button>Войти</button></a></blockquote>
+                </div>
+                </div>
+            {% endif %}
+        </div>
+        {% endblock %}
+    </div>
+</body>
+</html>

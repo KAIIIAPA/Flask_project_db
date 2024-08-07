@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block pagename %}
+    <h1>Новости</h1>
+{% endblock %}
+
+{% block left_page %}
+    <div class='left_menu'>
+        <blockquote><a href="/">Главная страница</a></blockquote>
+        <blockquote><a href="">Новости</a> </blockquote>
+        <blockquote><a href="/registration/">Регистрация</a> </blockquote>
+        {% if current_user.is_authenticated %}
+            {% if current_user.role == "Admin" %}
+                <blockquote><a href="/admin/">Админ панель</a></blockquote>
+            {% else %}
+            {% endif %}
+        {% else %}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block centre_page %}
+        <div class="centre_menu">
+        {% for new in news_all %}
+            <h2>{{ new.title }}</h2>
+            <p>{{ new.summary }}</p>
+            <p><img src="{{ new.img_url }}" width="850" height="450" alt=""></p>
+            <p>{{ new.created_at }}
+                {% if current_user.is_authenticated %}
+                    <a href="/news/{{ new.id }}"><button >Читать полностью</button></a>
+                {% else %}
+                    <button disabled>Для чтения статьи, Вам необходимо авторизоваться</button>
+                {% endif %}
+            </p>
+        {% endfor %}
+    </div>
+{% endblock %}

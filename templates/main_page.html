@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block pagename %}
+    <h1>Блог новостей кино и сериалов</h1>
+{% endblock %}
+
+{% block centre_page %}
+    <div class="centre_menu">
+        {% for new in news_all %}
+            <h2>{{ new.title }}</h2>
+            <p>{{ new.summary }}</p>
+            <img src="{{ new.img_url }}" width="850" height="450" alt="">
+            <p>{{ new.created_at }}
+                {% if current_user.is_authenticated %}
+                    <a href="/news/{{ new.id }}"><button >Читать полностью</button></a>
+                {% else %}
+                    <button disabled>Для чтения статьи, Вам необходимо авторизоваться</button>
+                {% endif %}
+            </p>
+        {% endfor %}
+        <div class="button_block_centre">
+            <p align=center><a href="/news/"><button>Все новости</button></a></p>
+        </div>
+    </div>
+{% endblock %}
